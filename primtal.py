@@ -17,4 +17,3 @@ def find_primes(bits, buffer):
     while arr_primes[0] == 0:
         arr_primes.remove(0)
     print(arr_primes)
-print('test')
