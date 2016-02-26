@@ -1,6 +1,10 @@
-import math
+import math # Imports important mathematical functions
 
-def find_primes(bits, buffer):
+readf = open('primtal.txt') #Opens file for reading
+appf = open('primtal.txt','a') #Opens file for appending
+print(readf.readline())
+
+def find_primes(bits, buffer): #Finds primes within a given range of bits
     arr_primes = []
     start_value = (2**bits)+1
     end_value = (2**(bits+1))-1
