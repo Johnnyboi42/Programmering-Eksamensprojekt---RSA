@@ -1,5 +1,3 @@
-readfile = open('primtal.txt')
-
 def in_file(numberino): # Decides if the number is in the file 'primtal.txt'
     readf = open('primtal.txt')
     readf.seek(0)
@@ -7,8 +5,17 @@ def in_file(numberino): # Decides if the number is in the file 'primtal.txt'
         if int(line) == numberino:
             return True
 
+def primes_in_range(bit):
+    readtxt = open('primtal.txt')
+    numOfPrimes = 0
+    prime_list = []
+    for line in readtxt:
+        if int(line) > 2**bit and int(line) < 2**(bit+1):
+            prime_list.append(int(line))
+    return prime_list
 
 def save_primes(lim): # Saves primes in file 'primtal.txt' if number is prime and not in file already
+    readfile = open('primtal.txt')
     for number in range(2,lim):
         if in_file(number) != True:
             is_prime = True
