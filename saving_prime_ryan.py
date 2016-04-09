@@ -5,7 +5,7 @@ def in_file(numberino): # Decides if the number is in the file 'primtal.txt'
         if int(line) == numberino:
             return True
 
-def primes_in_range(bit):
+def primes_in_range(bit): # Returns a list of the primes in the given bit range
     readtxt = open('primtal.txt')
     numOfPrimes = 0
     prime_list = []
@@ -16,18 +16,28 @@ def primes_in_range(bit):
 
 def save_primes(lim): # Saves primes in file 'primtal.txt' if number is prime and not in file already
     readfile = open('primtal.txt')
-    for number in range(2,lim):
-        if in_file(number) != True:
-            is_prime = True
-            readfile.seek(0)
-            for line in readfile:
-                if number % int(line) == 0:
-                    is_prime = False
-                    break
-            if is_prime:
-                appendf = open('primtal.txt','a')
-                appendf.write(str(number) + '\n')
+    readexpo = open('biggestexponent.txt')
+    readexpo.seek(0)
+    biggestNum = int(readexpo.readline())
+    if biggestNum < 2**lim:
+        for number in range(2**biggestNum,2**lim):
+            if in_file(number) != True:
+                is_prime = True
+                readfile.seek(0)
+                for line in readfile:
+                    if int(line) <= number/2:
+                        if number % int(line) == 0:
+                            is_prime = False
+                            break
+                    else:
+                        break
+                if is_prime:
+                    appendf = open('primtal.txt','a')
+                    appendf.write(str(number) + '\n')
+        writeExpo = open('biggestexponent.txt','w')
+        writeExpo.write(str(lim))
+        writeExpo.close()
 
-save_primes(2**16)
-readfile.seek(0)
-readfile.read()
+save_primes(17)
+#readfile.seek(0)
+#readfile.read()
