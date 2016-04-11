@@ -49,12 +49,15 @@ def private_key(n,e):
 def exteuclidAlg(n,e): # Returns last row of the Extended Euclidean Algorithm for public key (n,e) to find modular inverse.
     row1 = [n,1,0]
     row2 = [e,0,1]
+    iterations = 1
     while row2[0] != 1:
         k = math.floor(row1[0]/row2[0])
         newrow2 = [row1[0]-k*row2[0],row1[1]-k*row2[1], row1[2]-k*row2[2]]
         newrow1 = row2
         row2 = newrow2
         row1 = newrow1
+        x+=1
+    print(iterations)
     return (row2)
 
 print(exteuclidAlg(1008,421))
