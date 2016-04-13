@@ -1,4 +1,4 @@
-def in_file(numberino): # Decides if the number is in the file 'primtal.txt'
+def in_file(numberino): # Decides if the given number is in the file 'primtal.txt'
     readf = open('primtal.txt')
     readf.seek(0)
     for line in readf:
