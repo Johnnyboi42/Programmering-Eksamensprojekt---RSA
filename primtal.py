@@ -1,5 +1,5 @@
 import math # Imports important mathematical functions like gcd
-import random
+import random # Imports a random element that will be used for finding primes
 from saving_prime_ryan import save_primes, primes_in_range, in_file # Imports function from other file
 
 readf = open('primtal.txt') #Opens file for reading
