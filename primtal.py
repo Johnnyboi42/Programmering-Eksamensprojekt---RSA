@@ -1,9 +1,6 @@
 import math # Imports important mathematical functions like gcd
 import random # Imports a random element that will be used for finding primes
-from saving_prime_ryan import save_primes, primes_in_range, in_file # Imports function from other file
-
-readf = open('primtal.txt') #Opens file for reading
-appf = open('primtal.txt','a') #Opens file for appending
+from saving_prime_ryan import save_primes, primes_in_range, in_file # Imports functions from other file
 
 def find_primes2(bits,range): # Finds two primes within a given range of bits and returns them
     prime_list = primes_in_range(bits)
@@ -27,12 +24,11 @@ def public_key(bits, range): # Returns a public key (n,e) and Euler's totient fo
     if math.gcd(eKey,totientFunc) == 1:
         return (nKey,eKey,totientFunc)
     else:
-        public_key(bits-1,range)
+        public_key(bits,range+1)
 
-def exteuclidAlg(nKey,eKey): # Returns last number of the Extended Euclidean Algorithm for public key (n,e) to find modular inverse.
-    row1 = [nKey,1,0]
+def exteuclidAlg(totient,eKey): # Returns last number of the Extended Euclidean Algorithm for public key (n,e) to find modular inverse.
+    row1 = [totient,1,0]
     row2 = [eKey,0,1]
-    iterations = 0
     while row2[0] != 1:
         k1,k2 = row1[0],row2[0]
         k = math.floor(k1/k2)
@@ -40,18 +36,18 @@ def exteuclidAlg(nKey,eKey): # Returns last number of the Extended Euclidean Alg
         newrow1 = row2
         row2 = newrow2
         row1 = newrow1
-        iterations+=1
-    #print(iterations)
     return (row2[2])
 
 def private_key(e,totientFunc): # Returns the private key (n,d) for RSA decryption
     # DO THINGS, BUT PRIVATELY
-    deKey = exteuclidAlg(totientFunc,e)
-    if deKey < 0:
-        deKey += totientFunc
-    return deKey
+    dKey = exteuclidAlg(totientFunc,e)
+    if dKey < 0:
+        dKey += totientFunc
+    return dKey
 
-n,e,totient = public_key(16,100)
+bitno = int(input("Enter the bit length of encryption (17 max): ")) # User input
+rangeno = int(input("Enter the range of accepted prime values (fx 100): "))
+n,e,totient = public_key(bitno,rangeno)
 d = private_key(e,totient)
 
 def encrypt(msg): # Encrypts a message with the public key
@@ -62,7 +58,8 @@ def decrypt(msgE): # Decrypts an encrypted message with the private key
     msgD = pow(msgE,d,n)
     return msgD
 
-encMsg = encrypt(8) # Demonstration of encryption printed to console
-print(encMsg)
+encnum = int(input("What message do you want to encrypt? (number) "))
+encMsg = encrypt(encnum)
+print("The encrypted message looks like this: " + str(encMsg)) # Demonstration of encryption printed to console
 decMsg = decrypt(encMsg)
-print(decMsg)
+print("The decrypted message looks like this: " + str(decMsg))
